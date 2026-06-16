@@ -8,6 +8,7 @@ import {CanaryTesterController} from '../canary_tester/CanaryTesterController';
 import {ChannelController} from '../channel/ChannelController';
 import type {APIConfig} from '../config/APIConfig';
 import {ConnectionController} from '../connection/ConnectionController';
+import {EncoraRouter} from '../custom_encora/EncoraRouter';
 import {DonationController} from '../donation/DonationController';
 import {DownloadController} from '../download/DownloadController';
 import {FavoriteGifController} from '../favorite_gif/FavoriteGifController';
@@ -47,6 +48,7 @@ export function registerControllers(routes: HonoApp, config: APIConfig): void {
 	registerAdminControllers(routes);
 	AuthController(routes);
 	ChannelController(routes);
+	EncoraRouter(routes);
 	ConnectionController(routes);
 	BlueskyOAuthController(routes);
 	InstanceController(routes);
