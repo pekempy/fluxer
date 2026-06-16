@@ -529,6 +529,7 @@ fn integrations_config_section(
                             (password_input("integration_smtp_password", "SMTP password", Some("Leave blank to keep the current password.")))
                         }
                         (checkbox("integration_smtp_secure", "true", "Use TLS", integrations.email.smtp.secure.unwrap_or(true), true))
+                        (checkbox("integration_email_disable_new_ip_authorization", "true", "Disable new IP login authorisation", integrations.email.disable_new_ip_authorization, true))
                         div class="flex flex-wrap gap-2" {
                             button type="submit"
                                 formaction={(base) "/instance-config?action=test_smtp"}

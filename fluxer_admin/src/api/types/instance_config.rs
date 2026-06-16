@@ -146,6 +146,8 @@ pub struct InstanceEmailIntegrationResponse {
     pub from_name: Option<String>,
     #[serde(default)]
     pub smtp: InstanceEmailSmtpIntegrationResponse,
+    #[serde(default)]
+    pub disable_new_ip_authorization: bool,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
@@ -617,6 +619,8 @@ pub struct InstanceEmailIntegrationUpdateRequest {
     pub from_name: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub smtp: Option<InstanceEmailSmtpIntegrationUpdateRequest>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub disable_new_ip_authorization: Option<bool>,
 }
 
 #[derive(Clone, Debug, Default, Serialize)]
