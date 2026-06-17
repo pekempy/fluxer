@@ -22,6 +22,10 @@ const LinkEncoraRequest = z.object({
 	custom_badge_link: z.string().url().optional().describe('Custom badge profile link URL'),
 });
 
+const UnlinkEncoraRequest = z.object({
+	user_id: z.string().describe('The Prelude/Fluxer user ID (snowflake) to unlink'),
+});
+
 export function EncoraRouter(app: HonoApp): void {
 	// 1. Intercept connection deletion
 	// This endpoint is checked first because it's mounted before ConnectionController.
@@ -32,7 +36,7 @@ export function EncoraRouter(app: HonoApp): void {
 		if (user && type === ConnectionTypes.DOMAIN) {
 			const repository = getConnectionRepository();
 			const connection = await repository.findById(user.id, type, connection_id);
-			if (connection && (connection.name.endsWith('.encora.it') || connection.name === 'encora.it')) {
+			if (connection && connection.name.includes('encora.it')) {
 				return ctx.json({error: 'This connection is managed by Encora and cannot be removed.'}, 403);
 			}
 		}
@@ -60,7 +64,7 @@ export function EncoraRouter(app: HonoApp): void {
 			const userId = createUserID(BigInt(body.user_id));
 			const encoraUsername = body.encora_username;
 			const encoraSlug = body.encora_slug ?? encoraUsername;
-			const domainName = `${encoraUsername}.encora.it`.toLowerCase();
+			const domainName = `encora.it/traders/${encoraSlug}`.toLowerCase();
 
 			// Use provided badge URLs or set defaults
 			const customBadgeUrl = body.custom_badge_url ?? 'https://encora.it/images/favicon.png';
@@ -118,6 +122,57 @@ export function EncoraRouter(app: HonoApp): void {
 			});
 
 			return ctx.json(mapConnectionToResponse(resultRow));
+		},
+	);
+
+	// 3. Admin endpoint to unlink account
+	app.delete(
+		'/admin/users/unlink-encora',
+		requireAdminACL(AdminACLs.USER_UPDATE_FLAGS),
+		Validator('json', UnlinkEncoraRequest),
+		OpenAPI({
+			operationId: 'unlink_encora_connection',
+			summary: 'Unlink Encora connection',
+			responseSchema: null,
+			statusCode: 204,
+			security: ['adminApiKey'],
+			tags: ['Admin', 'Connections'],
+			description:
+				'Admin-only endpoint to remove a user\'s Encora domain connection and clear their custom badge fields. Requires USER_UPDATE_FLAGS permission.',
+		}),
+		async (ctx) => {
+			const body = ctx.req.valid('json');
+			const userId = createUserID(BigInt(body.user_id));
+
+			const repository = getConnectionRepository();
+			const userRepository = getUserRepository();
+			const gateway = getGatewayService();
+
+			// Find all domain connections and delete the encora.it one
+			const connections = await repository.findByUserId(userId);
+			const encoraConnection = connections.find(
+				(c) => c.connection_type === ConnectionTypes.DOMAIN && c.name.includes('encora.it'),
+			);
+
+			if (encoraConnection) {
+				await repository.delete(userId, ConnectionTypes.DOMAIN, encoraConnection.connection_id);
+			}
+
+			// Clear custom badge fields
+			await userRepository.patchUpsert(userId, {
+				custom_badge_url: null,
+				custom_badge_link: null,
+			});
+
+			// Broadcast gateway update
+			const updatedConnections = await repository.findByUserId(userId);
+			await gateway.dispatchPresence({
+				userId,
+				event: 'USER_CONNECTIONS_UPDATE',
+				data: {connections: updatedConnections.map(mapConnectionToResponse)},
+			});
+
+			return ctx.body(null, 204);
 		},
 	);
 }

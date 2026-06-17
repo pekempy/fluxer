@@ -25,6 +25,9 @@ const IMAGE_SOURCES: &[&str] = &[
     "https://*.youtube.com",
     "https://*.fluxer.media",
     "https://fluxer.media",
+    "https://fluxerstatic.com",
+    "https://*.encora.it",
+    "https://encora.it",
 ];
 
 const MEDIA_SOURCES: &[&str] = &[
@@ -38,6 +41,7 @@ const SCRIPT_SOURCES: &[&str] = &[
     "https://*.fluxer.app",
     "https://hcaptcha.com",
     "https://*.hcaptcha.com",
+    "https://fluxerstatic.com",
 ];
 
 const STYLE_SOURCES: &[&str] = &[
@@ -46,12 +50,14 @@ const STYLE_SOURCES: &[&str] = &[
     "https://*.hcaptcha.com",
     "https://fonts.googleapis.com",
     "https://api.fonts.coollabs.io",
+    "https://fluxerstatic.com",
 ];
 
 const FONT_SOURCES: &[&str] = &[
     "https://*.fluxer.app",
     "https://fonts.gstatic.com",
     "https://api.fonts.coollabs.io",
+    "https://fluxerstatic.com",
 ];
 
 const CONNECT_SOURCES: &[&str] = &[
@@ -98,6 +104,7 @@ fn build_csp_directives(
 
     let mut script = vec![
         "'self'".to_owned(),
+        "'unsafe-eval'".to_owned(),
         "'wasm-unsafe-eval'".to_owned(),
         "blob:".to_owned(),
     ];

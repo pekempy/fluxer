@@ -449,7 +449,13 @@ class RuntimeConfig {
 		try {
 			const url = new URL(apiEndpoint);
 			const isOfficialWebApp = url.hostname === 'web.fluxer.app' || url.hostname === 'web.canary.fluxer.app';
-			url.pathname = isOfficialWebApp ? '/api/.well-known/fluxer' : '/.well-known/fluxer';
+			if (isOfficialWebApp) {
+				url.pathname = '/api/.well-known/fluxer';
+			} else if (url.pathname === '/api' || url.pathname === '/api/') {
+				url.pathname = '/api/.well-known/fluxer';
+			} else {
+				url.pathname = '/.well-known/fluxer';
+			}
 			return url.toString();
 		} catch {
 			return `${apiEndpoint.replace(/\/api\/?$/, '')}/.well-known/fluxer`;
