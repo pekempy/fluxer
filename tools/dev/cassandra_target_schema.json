@@ -8674,6 +8674,14 @@
 					"type": "int"
 				},
 				{
+					"name": "custom_badge_url",
+					"type": "text"
+				},
+				{
+					"name": "custom_badge_link",
+					"type": "text"
+				},
+				{
 					"name": "date_of_birth",
 					"type": "date"
 				},

@@ -245,6 +245,8 @@ export interface UserProfileResponse {
 	banner: string | null;
 	banner_color?: number | null;
 	accent_color: number | null;
+	custom_badge_url: string | null;
+	custom_badge_link: string | null;
 }
 
 export const CustomStatusResponse = z.object({
@@ -460,6 +462,8 @@ export interface UserProfile {
 	readonly banner_color?: number | null;
 	readonly pronouns: string | null;
 	readonly accent_color: number | null;
+	readonly custom_badge_url?: string | null;
+	readonly custom_badge_link?: string | null;
 }
 
 export interface UserPartial {
@@ -567,6 +571,8 @@ const UserProfileDataResponse = z.object({
 	banner: z.string().nullable().describe('Hash of the profile banner image'),
 	banner_color: Int32Type.nullable().optional().describe('Default banner color if no custom banner'),
 	accent_color: Int32Type.nullable().describe('User-selected accent color'),
+	custom_badge_url: z.string().nullable().describe('Custom badge image URL'),
+	custom_badge_link: z.string().nullable().describe('Custom badge profile link URL'),
 });
 
 const GuildMemberProfileDataResponse = z

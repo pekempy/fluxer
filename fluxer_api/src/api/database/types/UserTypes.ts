@@ -39,6 +39,8 @@ export interface UserRow {
 	bio: Nullish<string>;
 	pronouns: Nullish<string>;
 	accent_color: Nullish<number>;
+	custom_badge_url?: Nullish<string>;
+	custom_badge_link?: Nullish<string>;
 	timezone: Nullish<string>;
 	timezone_privacy_flags: Nullish<number>;
 	date_of_birth: Nullish<types.LocalDate>;
@@ -102,6 +104,8 @@ export const USER_COLUMNS = [
 	'bio',
 	'pronouns',
 	'accent_color',
+	'custom_badge_url',
+	'custom_badge_link',
 	'timezone',
 	'timezone_privacy_flags',
 	'date_of_birth',

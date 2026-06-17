@@ -10,13 +10,16 @@ import {mapConnectionToResponse} from '../connection/ConnectionMappers';
 import {requireAdminACL} from '../middleware/AdminMiddleware';
 import {OpenAPI} from '../middleware/ResponseTypeMiddleware';
 import {getGatewayService} from '../middleware/ServiceRegistry';
-import {getConnectionRepository} from '../middleware/ServiceSingletons';
+import {getConnectionRepository, getUserRepository} from '../middleware/ServiceSingletons';
 import type {HonoApp} from '../types/HonoEnv';
 import {Validator} from '../Validator';
 
 const LinkEncoraRequest = z.object({
 	user_id: z.string().describe('The Prelude/Fluxer user ID (snowflake) to link'),
 	encora_username: z.string().min(1).describe("The user's Encora username"),
+	encora_slug: z.string().min(1).optional().describe("The user's Encora profile slug (used for profile link)"),
+	custom_badge_url: z.string().url().optional().describe('Custom badge image URL'),
+	custom_badge_link: z.string().url().optional().describe('Custom badge profile link URL'),
 });
 
 export function EncoraRouter(app: HonoApp): void {
@@ -56,10 +59,22 @@ export function EncoraRouter(app: HonoApp): void {
 			const body = ctx.req.valid('json');
 			const userId = createUserID(BigInt(body.user_id));
 			const encoraUsername = body.encora_username;
+			const encoraSlug = body.encora_slug ?? encoraUsername;
 			const domainName = `${encoraUsername}.encora.it`.toLowerCase();
 
+			// Use provided badge URLs or set defaults
+			const customBadgeUrl = body.custom_badge_url ?? 'https://encora.it/images/favicon.png';
+			const customBadgeLink = body.custom_badge_link ?? `https://encora.it/traders/${encoraSlug}`;
+
 			const repository = getConnectionRepository();
+			const userRepository = getUserRepository();
 			const gateway = getGatewayService();
+
+			// Update user with custom badge fields
+			await userRepository.patchUpsert(userId, {
+				custom_badge_url: customBadgeUrl,
+				custom_badge_link: customBadgeLink,
+			});
 
 			// Check if connection already exists
 			const existing = await repository.findByTypeAndIdentifier(userId, ConnectionTypes.DOMAIN, domainName);

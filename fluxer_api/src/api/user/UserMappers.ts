@@ -204,6 +204,8 @@ export function mapUserToProfileResponse(user: User, options?: {restrictProfile?
 			banner: stripBannerForUser(user),
 			banner_color: user.bannerColor,
 			accent_color: user.accentColor,
+			custom_badge_url: user.customBadgeUrl,
+			custom_badge_link: user.customBadgeLink,
 		};
 	}
 	return {
@@ -212,6 +214,8 @@ export function mapUserToProfileResponse(user: User, options?: {restrictProfile?
 		banner: stripBannerForUser(user),
 		banner_color: user.bannerColor,
 		accent_color: user.accentColor,
+		custom_badge_url: user.customBadgeUrl,
+		custom_badge_link: user.customBadgeLink,
 	};
 }
 
@@ -250,6 +254,8 @@ export function mapGuildMemberToProfileResponse(
 			pronouns: null,
 			banner: guildMember.isPremiumSanitized ? null : guildMember.bannerHash,
 			accent_color: guildMember.accentColor,
+			custom_badge_url: null,
+			custom_badge_link: null,
 		};
 	}
 	return {
@@ -257,6 +263,8 @@ export function mapGuildMemberToProfileResponse(
 		pronouns: guildMember.pronouns,
 		banner: guildMember.isPremiumSanitized ? null : guildMember.bannerHash,
 		accent_color: guildMember.accentColor,
+		custom_badge_url: null,
+		custom_badge_link: null,
 	};
 }
 

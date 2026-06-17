@@ -37,6 +37,8 @@ export class User {
 	readonly bio: string | null;
 	readonly pronouns: string | null;
 	readonly accentColor: number | null;
+	readonly customBadgeUrl: string | null;
+	readonly customBadgeLink: string | null;
 	readonly timezone: string | null;
 	readonly timezonePrivacyFlags: number;
 	readonly dateOfBirth: string | null;
@@ -99,6 +101,8 @@ export class User {
 		this.bio = row.bio ?? null;
 		this.pronouns = row.pronouns ?? null;
 		this.accentColor = row.accent_color ?? null;
+		this.customBadgeUrl = row.custom_badge_url ?? null;
+		this.customBadgeLink = row.custom_badge_link ?? null;
 		this.timezone = row.timezone ?? null;
 		this.timezonePrivacyFlags = row.timezone_privacy_flags ?? ProfileFieldPrivacyFlags.EVERYONE;
 		this.dateOfBirth = row.date_of_birth ? row.date_of_birth.toString() : null;

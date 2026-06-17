@@ -162,6 +162,15 @@ export const UserProfileBadges: React.FC<UserProfileBadgesProps> = observer(
 					});
 				}
 			}
+			if (profile?.userProfile?.custom_badge_url) {
+				result.push({
+					type: 'icon',
+					key: 'custom_badge',
+					iconUrl: profile.userProfile.custom_badge_url,
+					tooltip: i18n._(msg({message: 'Linked Encora Profile'})),
+					url: profile.userProfile.custom_badge_link ?? undefined,
+				});
+			}
 			return result;
 		}, [
 			selfHosted,
@@ -169,6 +178,8 @@ export const UserProfileBadges: React.FC<UserProfileBadgesProps> = observer(
 			profile?.premiumType,
 			profile?.premiumSince,
 			profile?.premiumLifetimeSequence,
+			profile?.userProfile?.custom_badge_url,
+			profile?.userProfile?.custom_badge_link,
 			i18n.locale,
 		]);
 		if (badges.length === 0) {
