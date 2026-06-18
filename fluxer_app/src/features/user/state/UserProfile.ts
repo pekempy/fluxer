@@ -8,7 +8,7 @@ import {makeAutoObservable, runInAction} from 'mobx';
 
 type ProfilesByGuildId = Record<string, Profile>;
 
-const PROFILE_TIMEOUT_MS = 60000;
+const PROFILE_TIMEOUT_MS = 15000;
 
 class UserProfile {
 	private logger = new Logger('UserProfile');

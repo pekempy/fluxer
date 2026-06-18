@@ -54,6 +54,15 @@ export function useUserProfileSurfaceState({
 			setProfile(cachedProfile);
 			setProfileLoadError(false);
 			setIsProfileLoading(false);
+			// Background revalidation: refresh the cached profile silently so
+			// badges and connections (e.g. Encora link) are always up-to-date.
+			void UserProfileCommands.fetch(userId, guildId)
+				.then((freshProfile) => {
+					if (!cancelled) setProfile(freshProfile);
+				})
+				.catch(() => {
+					// Silently ignore background refresh errors — we already have a cached profile.
+				});
 			return () => {
 				cancelled = true;
 			};
