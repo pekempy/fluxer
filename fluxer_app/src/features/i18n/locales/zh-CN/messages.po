@@ -18986,7 +18986,7 @@ msgstr "已关联设备"
 
 #: src/features/user/components/popouts/UserProfileBadges.tsx:170
 msgid "Linked Encora Profile"
-msgstr ""
+msgstr "已关联 Encora 个人资料"
 
 #. Settings search synonym. Used to match this term when the user types it in the settings search bar.
 #. Short label in the markdown tab. Keep it concise.

@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 
 pub const SOURCE_LOCALE: &str = "en-US";
 pub const DEFAULT_OPENROUTER_BASE_URL: &str = "https://openrouter.ai/api/v1";
-pub const DEFAULT_OPENROUTER_MODEL: &str = "google/gemini-2.5-flash-lite";
+pub const DEFAULT_OPENROUTER_MODEL: &str = "google/gemini-2.0-flash-exp:free";
 pub const DEFAULT_OPENROUTER_FALLBACK_MODELS: &str =
     "openai/gpt-4.1-nano,mistralai/mistral-nemo,mistralai/mistral-small-3.2-24b-instruct";
 pub const DEFAULT_OPENROUTER_PROVIDER_SORT: &str = "throughput";

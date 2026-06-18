@@ -18986,7 +18986,7 @@ msgstr "Perangkat tertaut"
 
 #: src/features/user/components/popouts/UserProfileBadges.tsx:170
 msgid "Linked Encora Profile"
-msgstr ""
+msgstr "Profil Encora yang terhubung"
 
 #. Settings search synonym. Used to match this term when the user types it in the settings search bar.
 #. Short label in the markdown tab. Keep it concise.

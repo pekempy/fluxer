@@ -18986,7 +18986,7 @@ msgstr "Povezani uređaji"
 
 #: src/features/user/components/popouts/UserProfileBadges.tsx:170
 msgid "Linked Encora Profile"
-msgstr ""
+msgstr "Povezani Encora profil"
 
 #. Settings search synonym. Used to match this term when the user types it in the settings search bar.
 #. Short label in the markdown tab. Keep it concise.

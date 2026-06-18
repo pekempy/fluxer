@@ -18986,7 +18986,7 @@ msgstr "लिंक किए गए डिवाइस"
 
 #: src/features/user/components/popouts/UserProfileBadges.tsx:170
 msgid "Linked Encora Profile"
-msgstr ""
+msgstr "लिंक्ड एनकोरा प्रोफ़ाइल"
 
 #. Settings search synonym. Used to match this term when the user types it in the settings search bar.
 #. Short label in the markdown tab. Keep it concise.
