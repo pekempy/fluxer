@@ -11,7 +11,7 @@ import {assign, getInitialSnapshot, type SnapshotFrom, setup, transition} from '
 
 export const INITIAL_MEMBER_LIST_SUBSCRIPTION_RANGE: [number, number] = [0, MEMBER_LIST_RANGE_MAX_SPAN];
 export const MEMBER_LIST_INITIAL_RETRY_DELAY_MS = 2000;
-export const MEMBER_LIST_MAX_RETRY_DELAY_MS = 5 * 60 * 1000;
+export const MEMBER_LIST_MAX_RETRY_DELAY_MS = 30 * 1000;
 
 export type {MemberListRange, MemberListRanges, NormalizedMemberListRanges};
 
@@ -157,6 +157,7 @@ export const memberListSubscriptionStateMachine = setup({
 		}),
 		markResumed: assign({
 			paused: false,
+			retryDelayMs: MEMBER_LIST_INITIAL_RETRY_DELAY_MS,
 		}),
 		resetRetryDelay: assign({
 			retryDelayMs: MEMBER_LIST_INITIAL_RETRY_DELAY_MS,

@@ -18985,6 +18985,10 @@ msgstr "Linked accounts"
 msgid "Linked devices"
 msgstr "Linked devices"
 
+#: src/features/user/components/popouts/UserProfileBadges.tsx:170
+msgid "Linked Encora Profile"
+msgstr "Linked Encora Profile"
+
 #. Settings search synonym. Used to match this term when the user types it in the settings search bar.
 #. Short label in the markdown tab. Keep it concise.
 #: src/features/user/components/modals/tabs/component_gallery_tab/MarkdownTab.tsx:29

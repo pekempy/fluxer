@@ -18984,6 +18984,10 @@ msgstr "Susietos paskyros"
 msgid "Linked devices"
 msgstr "Susieti įrenginiai"
 
+#: src/features/user/components/popouts/UserProfileBadges.tsx:170
+msgid "Linked Encora Profile"
+msgstr ""
+
 #. Settings search synonym. Used to match this term when the user types it in the settings search bar.
 #. Short label in the markdown tab. Keep it concise.
 #: src/features/user/components/modals/tabs/component_gallery_tab/MarkdownTab.tsx:29

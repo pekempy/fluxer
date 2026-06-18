@@ -611,7 +611,16 @@ const LazyMemberList = observer(function LazyMemberList({guild, channel}: LazyMe
 				identityKey={memberListIdentityKey}
 				data-flx="channel.channel-members.lazy-member-list.member-list-container--3"
 			>
-				{null}
+				{Array.from({length: 10}, (_, i) => (
+					<div
+						key={`loading-skeleton-${i}`}
+						className={clsx(styles.virtualRow, styles.virtualMemberRow)}
+						style={{transform: `translateY(${i * scaledMemberItemHeight}px)`}}
+						data-flx="channel.channel-members.lazy-member-list.loading-skeleton"
+					>
+						<SkeletonMemberItem index={i} data-flx="channel.channel-members.lazy-member-list.loading-skeleton-item" />
+					</div>
+				))}
 			</MemberListContainer>
 		);
 	}

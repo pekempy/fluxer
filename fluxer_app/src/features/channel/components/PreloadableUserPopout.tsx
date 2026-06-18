@@ -241,6 +241,7 @@ export const PreloadableUserPopout = React.forwardRef<
 		return (
 			<Popout
 				ref={ref}
+				uniqueId={`user-popout:${user.id}:${guildId ?? 'global'}`}
 				render={({popoutKey, onClose}) => (
 					<UserProfilePopout
 						key={`${user.id}:${guildId ?? 'global'}:${isWebhook ? 'webhook' : 'user'}`}
