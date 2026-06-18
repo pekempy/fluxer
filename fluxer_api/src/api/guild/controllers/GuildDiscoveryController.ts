@@ -19,6 +19,7 @@ import {
 } from '@fluxer/schema/src/domains/guild/GuildDiscoverySchemas';
 import {createGuildID} from '../../BrandedTypes';
 import {Config} from '../../Config';
+import {EXTERNAL_DISCOVERY_CATEGORIES} from '../services/GuildDiscoveryService';
 import type {GuildDiscoveryRow} from '../../database/types/GuildDiscoveryTypes';
 import {DefaultUserOnly, LoginRequired} from '../../middleware/AuthMiddleware';
 import {RateLimitMiddleware} from '../../middleware/RateLimitMiddleware';
@@ -94,10 +95,12 @@ export function GuildDiscoveryController(app: HonoApp) {
 			tags: ['Discovery'],
 		}),
 		async (ctx) => {
-			const categories = Object.entries(DiscoveryCategoryLabels).map(([id, name]) => ({
-				id: Number(id),
-				name,
-			}));
+			const categories =
+				EXTERNAL_DISCOVERY_CATEGORIES ||
+				Object.entries(DiscoveryCategoryLabels).map(([id, name]) => ({
+					id: Number(id),
+					name,
+				}));
 			return ctx.json(categories);
 		},
 	);

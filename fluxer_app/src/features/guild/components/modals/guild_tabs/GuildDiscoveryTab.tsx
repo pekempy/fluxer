@@ -14,6 +14,7 @@ import {Input, Textarea} from '@app/features/ui/components/form/FormInput';
 import {Spinner} from '@app/features/ui/components/Spinner';
 import {getSortedDiscoveryLanguages} from '@app/features/user/utils/LocaleUtils';
 import {useRemoteFormReset} from '@app/lib/forms/RemoteFormReset';
+import Discovery from '@app/features/discovery/state/Discovery';
 import {
 	DISCOVERY_DEFAULT_LANGUAGE,
 	DISCOVERY_DESCRIPTION_MAX_LENGTH,
@@ -32,6 +33,7 @@ import {msg} from '@lingui/core/macro';
 import {Trans, useLingui} from '@lingui/react/macro';
 import {InfoIcon, WarningIcon} from '@phosphor-icons/react';
 import {clsx} from 'clsx';
+import {observer} from 'mobx-react-lite';
 import type React from 'react';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
@@ -71,44 +73,6 @@ const COULDN_T_WITHDRAW_DISCOVERY_APPLICATION_DESCRIPTOR = msg({
 const COULDN_T_ADD_DISCOVERY_TAG_DESCRIPTOR = msg({
 	message: "Couldn't add tag",
 	comment: 'Error modal title shown when a custom Discovery tag cannot be added.',
-});
-const GAMING_DESCRIPTOR = msg({
-	message: 'Gaming',
-	comment: 'Discovery category dropdown option in the community Discovery settings tab.',
-});
-const MUSIC_DESCRIPTOR = msg({
-	message: 'Music',
-	comment: 'Discovery category dropdown option in the community Discovery settings tab.',
-});
-const ENTERTAINMENT_DESCRIPTOR = msg({
-	message: 'Entertainment',
-	comment: 'Discovery category dropdown option in the community Discovery settings tab.',
-});
-const EDUCATION_DESCRIPTOR = msg({
-	message: 'Education',
-	comment: 'Discovery category dropdown option in the community Discovery settings tab.',
-});
-const SCIENCE_TECHNOLOGY_DESCRIPTOR = msg({
-	message: 'Science & technology',
-	comment: 'Discovery category dropdown option in the community Discovery settings tab.',
-});
-const CONTENT_CREATOR_DESCRIPTOR = msg({
-	message: 'Content creator',
-	comment:
-		'Discovery category dropdown option in the community Discovery settings tab. Communities run by an individual creator.',
-});
-const ANIME_MANGA_DESCRIPTOR = msg({
-	message: 'Anime & manga',
-	comment: 'Discovery category dropdown option in the community Discovery settings tab.',
-});
-const MOVIES_TV_DESCRIPTOR = msg({
-	message: 'Movies & TV',
-	comment:
-		'Discovery category dropdown option in the community Discovery settings tab. "TV" is the abbreviation for television.',
-});
-const OTHER_DESCRIPTOR = msg({
-	message: 'Other',
-	comment: 'Catch-all Discovery category dropdown option in the community Discovery settings tab.',
 });
 const A_DESCRIPTION_IS_REQUIRED_DESCRIPTOR = msg({
 	message: 'A description is required.',
@@ -187,24 +151,14 @@ function StatusBadge({status}: {status: string}) {
 	);
 }
 
-const GuildDiscoveryTab: React.FC<{guildId: string}> = ({guildId}) => {
+const GuildDiscoveryTab: React.FC<{guildId: string}> = observer(({guildId}) => {
 	const {i18n} = useLingui();
 	const [status, setStatus] = useState<DiscoveryStatusResponse | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isWithdrawing, setIsWithdrawing] = useState(false);
 	const categoryOptions: ReadonlyArray<ComboboxOption<number>> = useMemo(
-		() => [
-			{value: 0, label: i18n._(GAMING_DESCRIPTOR)},
-			{value: 1, label: i18n._(MUSIC_DESCRIPTOR)},
-			{value: 2, label: i18n._(ENTERTAINMENT_DESCRIPTOR)},
-			{value: 3, label: i18n._(EDUCATION_DESCRIPTOR)},
-			{value: 4, label: i18n._(SCIENCE_TECHNOLOGY_DESCRIPTOR)},
-			{value: 5, label: i18n._(CONTENT_CREATOR_DESCRIPTOR)},
-			{value: 6, label: i18n._(ANIME_MANGA_DESCRIPTOR)},
-			{value: 7, label: i18n._(MOVIES_TV_DESCRIPTOR)},
-			{value: 8, label: i18n._(OTHER_DESCRIPTOR)},
-		],
-		[i18n.locale],
+		() => Discovery.categories.map((c) => ({value: c.id, label: c.name})),
+		[Discovery.categories],
 	);
 	const languageOptions: ReadonlyArray<ComboboxOption<string>> = useMemo(
 		() =>
@@ -228,6 +182,7 @@ const GuildDiscoveryTab: React.FC<{guildId: string}> = ({guildId}) => {
 	}, [guildId]);
 	useEffect(() => {
 		void fetchStatus();
+		void Discovery.loadCategories();
 	}, [fetchStatus]);
 	const application = status?.application ?? null;
 	const eligible = status?.eligible ?? false;
@@ -616,6 +571,6 @@ const GuildDiscoveryTab: React.FC<{guildId: string}> = ({guildId}) => {
 			)}
 		</div>
 	);
-};
+});
 
 export default GuildDiscoveryTab;
