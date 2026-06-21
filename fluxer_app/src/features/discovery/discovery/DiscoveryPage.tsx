@@ -143,6 +143,9 @@ export const DiscoveryPage = observer(function DiscoveryPage() {
 		observer.observe(node);
 		return () => observer.disconnect();
 	}, []);
+	useEffect(() => {
+		void Discovery.loadCategories();
+	}, []);
 	const handleSearchChange = useCallback((value: string) => {
 		if (searchTimerRef.current) {
 			clearTimeout(searchTimerRef.current);

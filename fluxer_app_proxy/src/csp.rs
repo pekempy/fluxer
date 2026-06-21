@@ -72,6 +72,8 @@ const CONNECT_SOURCES: &[&str] = &[
     "https://fluxer.media",
     "http://127.0.0.1:21863",
     "http://127.0.0.1:21864",
+    "https://livekit.prelude.chat",
+    "wss://livekit.prelude.chat",
 ];
 
 const WORKER_SOURCES: &[&str] = &["https://*.fluxer.app", "blob:"];

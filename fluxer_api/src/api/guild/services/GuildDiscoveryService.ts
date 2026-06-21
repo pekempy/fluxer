@@ -32,21 +32,7 @@ import {mapGuildToGuildResponse} from '../GuildModel';
 import type {IGuildDiscoveryRepository} from '../repositories/GuildDiscoveryRepository';
 import type {IGuildRepositoryAggregate} from '../repositories/IGuildRepositoryAggregate';
 
-export let EXTERNAL_DISCOVERY_CATEGORIES: Array<{id: number; name: string}> | null = null;
-let VALID_CATEGORY_TYPES = new Set<number>(Object.values(DiscoveryCategories));
-
-const externalFile = process.env.DISCOVERY_CATEGORIES_FILE;
-if (externalFile && fs.existsSync(externalFile)) {
-	try {
-		const data = JSON.parse(fs.readFileSync(externalFile, 'utf8'));
-		if (Array.isArray(data)) {
-			EXTERNAL_DISCOVERY_CATEGORIES = data;
-			VALID_CATEGORY_TYPES = new Set<number>(data.map((c: any) => c.id));
-		}
-	} catch (e) {
-		console.error('Failed to load external discovery categories', e);
-	}
-}
+const VALID_CATEGORY_TYPES = new Set<number>(Object.values(DiscoveryCategories));
 
 function sanitizeTags(tags: ReadonlyArray<string> | null | undefined): Array<string> {
 	if (!tags || tags.length === 0) return [];

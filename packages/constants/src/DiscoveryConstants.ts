@@ -3,29 +3,23 @@
 import type {ValueOf} from '@fluxer/constants/src/ValueOf';
 
 export const DiscoveryCategories = {
-	GAMING: 0,
-	MUSIC: 1,
-	ENTERTAINMENT: 2,
-	EDUCATION: 3,
-	SCIENCE_AND_TECHNOLOGY: 4,
-	CONTENT_CREATOR: 5,
-	ANIME_AND_MANGA: 6,
-	MOVIES_AND_TV: 7,
-	OTHER: 8,
+	MASTERS: 0,
+	GENERAL_TRADING: 1,
+	SUBTITLES: 2,
+	TRACKING: 3,
+	SHOW_SPECIFIC: 4,
+	OTHER: 5,
 } as const;
 
 export type DiscoveryCategory = ValueOf<typeof DiscoveryCategories>;
 
 export const DiscoveryCategoryLabels: Record<DiscoveryCategory, string> = {
-	0: 'Gaming',
-	1: 'Music',
-	2: 'Entertainment',
-	3: 'Education',
-	4: 'Science & Technology',
-	5: 'Content Creator',
-	6: 'Anime & Manga',
-	7: 'Movies & TV',
-	8: 'Other',
+	0: 'Masters',
+	1: 'General Trading',
+	2: 'Subtitles',
+	3: 'Tracking',
+	4: 'Show Specific',
+	5: 'Other',
 };
 export const DiscoveryApplicationStatus = {
 	PENDING: 'pending',

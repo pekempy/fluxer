@@ -204,7 +204,10 @@ export const shouldRenderAsInlineThumbnail = (media?: EmbedMedia): boolean => {
 	const {dimensions: thumbnailDimensions} = thumbnailCalculator.calculate({width: media.width, height: media.height});
 	const thumbnailWidth = thumbnailDimensions.width;
 	const {width: fullWidth} = calculateEmbedImageDimensions(media);
-	return fullWidth < 300 && thumbnailWidth >= 40;
+	if (fullWidth < 300 && thumbnailWidth >= 40) return true;
+	const aspectRatio = media.width / media.height;
+	if (aspectRatio >= 0.8 && aspectRatio <= 1.25) return true;
+	return false;
 };
 export const isMediaMatureContent = (media?: EmbedMedia): boolean => {
 	if (!media) return false;
