@@ -177,14 +177,11 @@ export class MessageReactionsManager {
 	}
 
 	handleConnectionOpen(): void {
-		const messageIds = Array.from(this.messageStates.keys());
 		const reactionKeys = Array.from(this.reactors.keys());
 		for (const key of reactionKeys) this.retireReactionEntry(key);
-		this.messageStates.clear();
 		this.reactors.clear();
 		this._keysByMessage.clear();
 		this.batch(() => {
-			for (const messageId of messageIds) this.queueMessageNotify(messageId);
 			for (const key of reactionKeys) this.queueReactionNotify(key);
 		});
 	}
