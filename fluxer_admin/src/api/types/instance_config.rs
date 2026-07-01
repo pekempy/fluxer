@@ -142,6 +142,8 @@ pub struct InstanceEmailIntegrationResponse {
     pub smtp: InstanceEmailSmtpIntegrationResponse,
     #[serde(default)]
     pub disable_new_ip_authorization: bool,
+    #[serde(default)]
+    pub effective_disable_new_ip_authorization: bool,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]

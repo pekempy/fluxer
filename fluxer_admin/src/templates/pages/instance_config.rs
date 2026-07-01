@@ -481,6 +481,11 @@ fn integrations_config_section(
                             } @else {
                                 (badge("Effective: disabled", BadgeVariant::Default))
                             }
+                            @if integrations.email.effective_disable_new_ip_authorization {
+                                (badge("IP auth disabled", BadgeVariant::Warning))
+                            } @else {
+                                (badge("IP auth required", BadgeVariant::Default))
+                            }
                             (secret_badge("SMTP password", integrations.email.smtp.password_set))
                         }
                         (checkbox("integration_email_enabled", "true", "Enable email delivery", integrations.email.effective_enabled, true))

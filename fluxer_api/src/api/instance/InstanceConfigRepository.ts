@@ -206,6 +206,7 @@ interface InstanceIntegrationsAdminConfig {
 			secure: boolean | null;
 		};
 		disable_new_ip_authorization: boolean;
+		effective_disable_new_ip_authorization: boolean;
 	};
 	bluesky: {
 		enabled: boolean | null;
@@ -1338,7 +1339,8 @@ export class InstanceConfigRepository {
 					password_set: secretIsSet(integrations.email.smtp.password) || secretIsSet(Config.email.smtp?.password),
 					secure: email.smtp?.secure ?? null,
 				},
-				disable_new_ip_authorization: integrations.email.disable_new_ip_authorization || !email.enabled,
+				disable_new_ip_authorization: integrations.email.disable_new_ip_authorization ?? false,
+				effective_disable_new_ip_authorization: integrations.email.disable_new_ip_authorization || !email.enabled,
 			},
 			bluesky: {
 				enabled: integrations.bluesky.enabled,

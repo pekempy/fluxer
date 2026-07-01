@@ -589,6 +589,7 @@ const InstanceIntegrationsResponse = z.object({
 			secure: z.boolean().nullable(),
 		}),
 		disable_new_ip_authorization: z.boolean(),
+		effective_disable_new_ip_authorization: z.boolean(),
 	}),
 	bluesky: z.object({
 		enabled: z.boolean().nullable(),
