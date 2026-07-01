@@ -304,8 +304,12 @@ export async function login(
 	if (!hasMfa && !isAppStoreReviewer) {
 		const isIpAuthorized = await users.checkIpAuthorized(currentUser.id, clientIp);
 		if (!isIpAuthorized) {
-			const integrationsConfig = await getInstanceConfigRepository().getInstanceIntegrationsConfig();
-			if (integrationsConfig.email.disable_new_ip_authorization) {
+			const instanceConfigRepository = getInstanceConfigRepository();
+			const [integrationsConfig, effectiveEmailConfig] = await Promise.all([
+				instanceConfigRepository.getInstanceIntegrationsConfig(),
+				instanceConfigRepository.getEffectiveEmailConfig(),
+			]);
+			if (integrationsConfig.email.disable_new_ip_authorization || !effectiveEmailConfig.enabled) {
 				await users.createAuthorizedIp(currentUser.id, clientIp);
 			} else {
 				const ticket = createIpAuthorizationTicket(await AuthUtility.generateSecureToken(ctx));

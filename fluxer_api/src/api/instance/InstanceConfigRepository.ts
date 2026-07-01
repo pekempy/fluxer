@@ -1338,7 +1338,7 @@ export class InstanceConfigRepository {
 					password_set: secretIsSet(integrations.email.smtp.password) || secretIsSet(Config.email.smtp?.password),
 					secure: email.smtp?.secure ?? null,
 				},
-				disable_new_ip_authorization: integrations.email.disable_new_ip_authorization ?? false,
+				disable_new_ip_authorization: integrations.email.disable_new_ip_authorization || !email.enabled,
 			},
 			bluesky: {
 				enabled: integrations.bluesky.enabled,
